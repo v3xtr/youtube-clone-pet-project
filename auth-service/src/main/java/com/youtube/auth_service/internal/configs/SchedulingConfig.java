@@ -1,4 +1,4 @@
-package com.youtube.auth_service.internal.configs.port;
+package com.youtube.auth_service.internal.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
