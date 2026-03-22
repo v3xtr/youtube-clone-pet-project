@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.function.Consumer;
 
-import org.apache.kafka.common.Uuid;
-import org.aspectj.bridge.Message;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.youtube.notification.service.delivery.broker.port.INotificationConsumer;
@@ -23,8 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NotificationConsumer implements INotificationConsumer{
     
     private final ProcessedEventRepository eventRepository;
-
-    @Bean
+    
     public Consumer<UserRegisteredEventEntity> userRegistered() {
         return event -> { 
 
