@@ -1,6 +1,5 @@
 package com.youtube.auth_service.delivery.broker;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
