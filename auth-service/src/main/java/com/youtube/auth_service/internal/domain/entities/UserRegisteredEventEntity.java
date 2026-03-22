@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRegisteredEvent {
+public class UserRegisteredEventEntity {
     private UUID eventId;
     private UUID userId;
     private String email;
