@@ -20,5 +20,6 @@ public class OutboxEventEntity {
 
     private LocalDateTime createdAt;
 
+    @Builder.Default
     private boolean isProcessed = false;
 }
