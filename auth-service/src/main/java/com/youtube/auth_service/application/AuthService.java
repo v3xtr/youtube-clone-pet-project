@@ -1,9 +1,7 @@
 package com.youtube.auth_service.application;
 
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +10,7 @@ import com.youtube.auth_service.internal.domain.entities.UserEntity;
 import com.youtube.auth_service.internal.domain.models.UserModel;
 import com.youtube.auth_service.internal.mappers.UserMapper;
 import com.youtube.auth_service.internal.repo.UserRepository;
+import com.youtube.auth_service.internal.repo.port.IUserRepositoryCache;
 import com.youtube.auth_service.pkg.PasswordHashing;
 import com.youtube.auth_service.pkg.UserAlreadyExistsException;
 import com.youtube.auth_service.pkg.UserNotFoundException;
@@ -24,8 +23,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthService implements IAuthService{
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final IUserRepositoryCache userRepoCache;
     private final PasswordHashing passwordHashing;
-    private final StringRedisTemplate redisTemplate;
 
     @Transactional
     public Optional<UserEntity> register(UserEntity userEntity) {
@@ -66,7 +65,6 @@ public class AuthService implements IAuthService{
     }
 
     public void saveToken(String userId, String deviceId, String refreshToken){
-        
         String redisKey = String.format("refreshToken:%s%s", userId, deviceId);
 
         if (redisKey == null){
@@ -77,7 +75,6 @@ public class AuthService implements IAuthService{
             throw new RuntimeException("refreshToken must be provided");
         }
 
-
-        redisTemplate.opsForValue().set(redisKey, refreshToken, 7, TimeUnit.DAYS);
+        userRepoCache.saveToken(redisKey, refreshToken);
     }
 }
