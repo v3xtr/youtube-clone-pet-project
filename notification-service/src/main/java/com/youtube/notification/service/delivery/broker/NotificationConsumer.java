@@ -38,6 +38,8 @@ public class NotificationConsumer implements INotificationConsumer{
                 
                 eventRepository.save(new ProcessedEvent(eventId, LocalDateTime.now()));
                 
+                log.info("[NotificationConsumer userRegistered]: processed event {}", event);
+
             } catch (Exception e) {
                 log.error("[NotificationConsumer]: error while sending email: {}", e.getMessage());
                 throw new RuntimeException("Retry please!");
